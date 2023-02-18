@@ -33,6 +33,8 @@
 
 ;; Interactivity
 (ido-mode t)
+(ido-everywhere t)
+(setq ido-enable-flex-matching t)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -52,3 +54,8 @@
 (set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8-unix)
 (set-terminal-coding-system 'utf-8-unix)
+
+;; Editing
+(setq tab-width 4)
+(setq show-trailing-whitespace t)
+(setq indent-tabs-mode nil)
