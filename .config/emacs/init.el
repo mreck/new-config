@@ -2,7 +2,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-(setq package-list '(magit smex))
+(setq package-list '(company magit smex))
 (package-initialize)
 
 (unless package-archive-contents
@@ -34,19 +34,20 @@
 ;; Interactivity
 (ido-mode t)
 (ido-everywhere t)
+
 (setq ido-enable-flex-matching t)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-;; Recent files
+;; Recent Files
 (recentf-mode 1)
 (setq recentf-max-menu-items 50)
 (setq recentf-max-saved-items 50)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
-;; Clean up white space
+;; Clean up White Space
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;; File Encoding
@@ -59,3 +60,8 @@
 (setq tab-width 4)
 (setq show-trailing-whitespace t)
 (setq indent-tabs-mode nil)
+
+;; Auto-Complete
+(global-company-mode 1)
+; use "\t" instead of (kbd "<tab>"), so it's not triggered in the mini-buffer
+(global-set-key "\t" #'company-indent-or-complete-common)
