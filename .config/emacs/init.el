@@ -22,29 +22,28 @@
 (show-paren-mode 1)
 (delete-selection-mode 1)
 
-(setq initial-scratch-message "")
-(setq inhibit-startup-message t)
-(setq visible-bell nil)
-(setq compilation-ask-about-save nil)
-(setq backup-directory-alist '(("." . "~/.emacs-backups")))
+(setq initial-scratch-message ""
+      inhibit-startup-message t
+      visible-bell nil
+      compilation-ask-about-save nil
+      backup-directory-alist '(("." . "~/.emacs-backups")))
 
 (load-theme 'deeper-blue t)
 (set-frame-font "Droid Sans Mono 13" nil t)
 
 ;; Interactivity
 (ido-mode t)
-(ido-everywhere t)
+; (ido-everywhere t)
 
 (setq ido-enable-flex-matching t)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; Recent Files
 (recentf-mode 1)
-(setq recentf-max-menu-items 50)
-(setq recentf-max-saved-items 50)
+(setq recentf-max-menu-items 50
+      recentf-max-saved-items 50)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
 ;; Clean up White Space
@@ -57,11 +56,14 @@
 (set-terminal-coding-system 'utf-8-unix)
 
 ;; Editing
-(setq tab-width 4)
-(setq show-trailing-whitespace t)
-(setq indent-tabs-mode nil)
+(setq tab-width 4
+      show-trailing-whitespace t
+      indent-tabs-mode nil)
 
 ;; Auto-Complete
 (global-company-mode 1)
 ; use "\t" instead of (kbd "<tab>"), so it's not triggered in the mini-buffer
 (global-set-key "\t" #'company-indent-or-complete-common)
+
+;; Snippets
+; TODO: https://github.com/joaotavora/yasnippet
