@@ -1,16 +1,31 @@
-;; Packages
+;; Package Management
 (require 'package)
+(add-to-list 'package-archives '("elpa"  . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-(setq package-list '(company magit smex))
-(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(unless package-archive-contents
-  (package-refresh-contents))
+(eval-and-compile
+  (setq use-package-always-ensure t
+	use-package-expand-minimally t))
 
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+;; Packages
+(use-package company
+  :config
+  (global-company-mode 1)
+  ; use "\t" instead of (kbd "<tab>"), so it's not triggered in the mini-buffer
+  (global-set-key "\t" #'company-indent-or-complete-common))
+
+(use-package magit)
+
+(use-package smex
+  :config
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+
+; TODO: https://github.com/joaotavora/yasnippet
 
 ;; Minimal UI
 (blink-cursor-mode 0)
@@ -34,11 +49,7 @@
 ;; Interactivity
 (ido-mode t)
 ; (ido-everywhere t)
-
 (setq ido-enable-flex-matching t)
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 ;; Recent Files
 (recentf-mode 1)
@@ -59,11 +70,3 @@
 (setq tab-width 4
       show-trailing-whitespace t
       indent-tabs-mode nil)
-
-;; Auto-Complete
-(global-company-mode 1)
-; use "\t" instead of (kbd "<tab>"), so it's not triggered in the mini-buffer
-(global-set-key "\t" #'company-indent-or-complete-common)
-
-;; Snippets
-; TODO: https://github.com/joaotavora/yasnippet
