@@ -29,17 +29,17 @@ nnoremap ; :
 map H ^
 map L $
 
-" shorter split navigation
+" faster split navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
-" ctrl-p settings
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build)|(\.(swp|ico|git|svn))$'
-let g:ctrlp_working_path_mode = 'ra'
-
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+" ctrl-p settings
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
+" let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build)|(\.(swp|ico|git|svn))$'
+" let g:ctrlp_working_path_mode = 'ra'
 
 " german characters
 imap :a ä
@@ -52,10 +52,12 @@ imap :s ß
 
 " leader shortcuts
 map <leader>w :w<CR>
-map <leader>s :set spell!<CR>
-map <leader>n :set number!<CR>:set relativenumber!<CR>
 map <leader>b :w! \| ./build.sh<CR>
+map <leader>m :make<CR>
 map <leader>g m0:%s/  \+/ /e<CR>gg=G`0
+
+map <leader>xs :set spell!<CR>
+map <leader>xn :set number!<CR>:set relativenumber!<CR>
 
 " some basics
 syntax on
