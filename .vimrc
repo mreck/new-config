@@ -1,7 +1,87 @@
+" some basics
+set nocompatible
+syntax enable
+filetype plugin on
+
 map <space> <leader>
 
-" necessary for lots of cool stuff
-set nocompatible
+set tabstop=4
+set shiftwidth=4
+set background=dark
+
+set number
+set relativenumber
+set smartindent
+set encoding=utf-8
+set printencoding=utf-8
+
+set showcmd " shows you what you are typing as a command
+set hidden  " allow multiple buffers without saving
+
+" sane splits
+set splitright
+set splitbelow
+
+" use the current working directory and subfolders for searching
+set path+=**
+
+" proper search
+set incsearch  " highlight while searching
+set ignorecase " case insensitive pattern matching
+set smartcase  " override ignorecase if pattern contains uppercase
+set gdefault   " replace global (///g) as default
+
+" enable autocompletion
+set wildmenu
+set wildmode=longest,list,full
+
+" tweak netrw (file browser) |netwr-browse-maps|
+  "let g:netrw_banner=0
+  "TODO: find a good (leader) shortcut for netrw
+let g:netrw_browser_split=4 " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+" cursur stuff (WIP)
+  "TODO: make the cursor red for better visibility
+  "highlight Cursor guifg=white guibg=black
+  "highlight iCursor guifg=white guibg=steelblue
+  "set guicursor=n-v-c:block-Cursor
+  "set guicursor+=i:ver100-iCursor
+  "set guicursor+=n-v-c:blinkon0
+  "set guicursor+=i:blinkwait10
+
+" overwrite MakeTags command to create ctags
+command! MakeTags !ctags -R .
+
+" function to toggle imaps for German
+let b:my_german_imaps = "off"
+
+function! ToggleGermanIMaps()
+	if b:my_german_imaps == "on"
+		iunmap :a
+		iunmap :u
+		iunmap :o
+		iunmap :A
+		iunmap :U
+		iunmap :O
+		iunmap :s
+		let b:my_german_imaps = "off"
+		echo "German insert mappings disabled"
+	else
+		imap :a ä
+		imap :u ü
+		imap :o ö
+		imap :A Ä
+		imap :U Ü
+		imap :O Ö
+		imap :s ß
+		let b:my_german_imaps = "on"
+		echo "German insert mappings enabled"
+	endif
+endfunction
 
 " disable arrow keys (use home row!)
 nnoremap <left>  :echoe "Use h"<CR>
@@ -35,65 +115,25 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" ctrl-p settings
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build)|(\.(swp|ico|git|svn))$'
-" let g:ctrlp_working_path_mode = 'ra'
+" system clipboard integrations
+vnoremap <leader>d "+d
+vnoremap <leader>y "+y
 
-" german characters
-imap :a ä
-imap :u ü
-imap :o ö
-imap :A Ä
-imap :U Ü
-imap :O Ö
-imap :s ß
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
 
 " leader shortcuts
 map <leader>w :w<CR>
-map <leader>b :w! \| ./build.sh<CR>
-map <leader>m :make<CR>
-map <leader>g m0:%s/  \+/ /e<CR>gg=G`0
+map <leader>W :wa<CR>
+map <leader>m :wa<CR>:make<CR>
+map <leader>f :find<space>
+map <leader>b :b<space>
+  "map <leader>g m0:%s/  \+/ /e<CR>gg=G`0
 
-map <leader>xs :set spell!<CR>
-map <leader>xn :set number!<CR>:set relativenumber!<CR>
-
-" some basics
-syntax on
-
-set tabstop=4
-set shiftwidth=4
-set background=dark
-
-set number
-set relativenumber
-set smartindent
-set encoding=utf-8
-set printencoding=utf-8
-
-" sane splits
-set splitright
-set splitbelow
-
-" allow multiple buffers without saving
-set hidden
-
-" use the current working directory and subfolders for searching
-set path+=**
-
-" shows you what you are typing as a command
-set showcmd
-
-" proper search
-set incsearch  " highlight while searching
-set ignorecase " case insensitive pattern matching
-set smartcase  " override ignorecase if pattern contains uppercase
-set gdefault   " replace global (///g) as default
-
-" enable autocompletion
-set wildmenu
-set wildmode=longest,list,full
+" toggle various things (with <leader>t)
+map <leader>ts :set spell!<CR>
+map <leader>tn :set number!<CR>:set relativenumber!<CR>
+map <leader>tg :call ToggleGermanIMaps()<CR>
 
 " set max width based on the file type
 if has("autocmd")
