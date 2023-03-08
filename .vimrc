@@ -1,4 +1,4 @@
-" some basics
+" the basics
 set nocompatible
 syntax enable
 filetype plugin on
@@ -98,7 +98,8 @@ nnoremap j gj
 nnoremap k gk
 
 " map more ESC options
-inoremap jk <esc>
+inoremap jk    <esc>
+inoremap kj    <esc>
 inoremap <C-j> <esc>
 inoremap <C-k> <esc>
 
@@ -135,26 +136,28 @@ map <leader>ts :set spell!<CR>
 map <leader>tn :set number!<CR>:set relativenumber!<CR>
 map <leader>tg :call ToggleGermanIMaps()<CR>
 
-" set max width based on the file type
 if has("autocmd")
-        au BufRead,BufNewFile *.txt setlocal textwidth=80
-endif
+	" HTML tag expander
+	autocmd FileType html inoremap <C-t> <ESC>"hdiWi<<ESC>"hpa></<ESC>"hpa><ESC>?<<CR>i
+	autocmd FileType html nnoremap <C-t> <ESC>"hdiWi<<ESC>"hpa></<ESC>"hpa><ESC>?<<CR>i
+	autocmd FileType html inoremap <C-e> <ESC>"hdiWi<<ESC>"hpa></<ESC>"hpa><ESC>?<<CR>i<CR><CR><ESC>ki<TAB>
+	autocmd FileType html nnoremap <C-e> <ESC>"hdiWi<<ESC>"hpa></<ESC>"hpa><ESC>?<<CR>i<CR><CR><ESC>ki<TAB>
 
-" delete trailing whitespace on save
-autocmd BufWritePre * %s/\s\+$//e
+	" set max width based on the file type
+	autocmd BufRead,BufNewFile *.txt setlocal textwidth=80
 
-" disable automatic comment insertion
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+	" delete trailing whitespace on save
+	autocmd BufWritePre * %s/\s\+$//e
 
-" remember cursor position
-if has("autocmd")
-        au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+	" disable automatic comment insertion
+	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" reload vimrc after saving it
-if has("autocmd")
-        augroup reload_vimrc
-                autocmd!
-                autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source %
-        augroup END
+	" remember cursor position
+	autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+	" reload vimrc after saving it
+	augroup reload_vimrc
+		autocmd!
+		autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source %
+	augroup END
 endif
